@@ -7,7 +7,6 @@ import com.test.pismo.exceptions.BusinessException;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import net.bytebuddy.implementation.bytecode.Throw;
 
 @RequiredArgsConstructor
 @Getter

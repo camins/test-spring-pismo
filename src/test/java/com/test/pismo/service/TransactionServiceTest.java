@@ -6,6 +6,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +22,6 @@ import com.test.pismo.domain.Transaction;
 import com.test.pismo.dtos.TransactionDTO;
 import com.test.pismo.exceptions.AmountException;
 import com.test.pismo.exceptions.BusinessException;
-import com.test.pismo.exceptions.EntityNotFoundException;
 import com.test.pismo.repository.TransactionRepository;
 import com.test.pismo.service.interfaces.AccountService;
 import com.test.pismo.service.interfaces.TransactionService;

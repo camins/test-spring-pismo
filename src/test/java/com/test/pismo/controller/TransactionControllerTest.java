@@ -83,8 +83,8 @@ public class TransactionControllerTest extends SpringTestGeneral {
 	private Transaction createTransaction() {
 		return Transaction.builder()
 				.id(1L)
-				.account(new Account(1L, "12345678900", null))
-				.operationType(OperationType.COMPRA_A_VISTA)
+				.account(new Account(1L, "12345678900"))
+				.operationType(OperationType.COMPRA_A_VISTA.getId())
 				.amount(Double.parseDouble("-50.00"))
 				.eventDate(LocalDateTime.now())
 				.build();

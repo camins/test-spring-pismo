@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.test.pismo.dtos.AccountDTO;
 import com.test.pismo.service.interfaces.AccountService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
 @RequestMapping("/accounts")
 public class AccountController {
@@ -22,6 +26,11 @@ public class AccountController {
 	@Autowired
 	private AccountService accountService;
 	
+	@ApiOperation(value = "Create the account")
+	@ApiResponses(value = {
+		    @ApiResponse(code = 201, message = "Account created with success. Return the account created"),
+		    @ApiResponse(code = 500, message = "Generated an exception referring to the Document Number"),
+		})
 	@PostMapping
 	public ResponseEntity<AccountDTO> create(@Valid @RequestBody AccountDTO accountDTO) {
 		
@@ -29,6 +38,11 @@ public class AccountController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(aDTO);
 	}
 	
+	@ApiOperation(value = "Search the account")
+	@ApiResponses(value = {
+		    @ApiResponse(code = 200, message = "Account found with success. Return the account"),
+		    @ApiResponse(code = 500, message = "Account not found"),
+		})
 	@GetMapping(value = "/{accountId}")
 	public ResponseEntity<AccountDTO> find(@PathVariable Long accountId) {
 		

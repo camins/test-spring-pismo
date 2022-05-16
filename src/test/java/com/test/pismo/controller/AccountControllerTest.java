@@ -6,8 +6,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.HashSet;
-
 import javax.persistence.EntityNotFoundException;
 
 import org.junit.jupiter.api.DisplayName;
@@ -56,23 +54,6 @@ public class AccountControllerTest extends SpringTestGeneral {
 		assertEquals(aDTO.getDocumentNumber(), argument.getValue().getDocumentNumber());
 			
 	}
-	
-	/*
-	@Test 
-	public void whenCreatedAccountWithDocumentNumberAlreadExists_thenError() throws Exception{ 
-		AccountDTO newAccountDTO = createAccountReceiveDTO();
-
-		when(accountService.create(any())).thenThrow(BusinessException.class);
-
-		this.mockMvc
-				.perform(MockMvcRequestBuilders
-						.post("/accounts")
-						.contentType(MediaType.APPLICATION_JSON)
-						.content(asJsonString(newAccountDTO))
-						.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isBadRequest());
-	  
-	}*/
 	
 	@Test
 	public void whenCreatedInvalidAccount_thenError() throws Exception {
@@ -125,7 +106,6 @@ public class AccountControllerTest extends SpringTestGeneral {
 		return Account.builder()
 				.id(1L)
 				.documentNumber("12345678900")
-				.transactions(new HashSet<>())
 				.build();
 	}
 	

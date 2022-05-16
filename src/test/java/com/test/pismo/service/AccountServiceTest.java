@@ -1,15 +1,15 @@
 package com.test.pismo.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.HashSet;
 import java.util.Optional;
+
+import javax.persistence.EntityNotFoundException;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +23,6 @@ import com.test.pismo.SpringTestGeneral;
 import com.test.pismo.domain.Account;
 import com.test.pismo.dtos.AccountDTO;
 import com.test.pismo.exceptions.BusinessException;
-import com.test.pismo.exceptions.EntityNotFoundException;
 import com.test.pismo.repository.AccountRepository;
 import com.test.pismo.service.interfaces.AccountService;
 
@@ -102,7 +101,7 @@ public class AccountServiceTest extends SpringTestGeneral {
 
 		assertEquals(a.getId(), ret.getId());
 		assertEquals(a.getDocumentNumber(), ret.getDocumentNumber());
-		assertNotNull(ret.getTransactions());
+		//assertNotNull(ret.getTransactions());
 	}
 	
 	private AccountDTO createAccountDTO() {
@@ -115,7 +114,7 @@ public class AccountServiceTest extends SpringTestGeneral {
 		return Account.builder()
 				.id(1L)
 				.documentNumber("12345678900")
-				.transactions(new HashSet<>())
+				//.transactions(new HashSet<>())
 				.build();
 	}
 

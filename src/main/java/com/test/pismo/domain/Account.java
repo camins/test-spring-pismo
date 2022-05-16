@@ -1,14 +1,10 @@
 package com.test.pismo.domain;
 
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -32,7 +28,4 @@ public class Account {
     @Column(name = "document_number", unique = true, length = 11, nullable = false)
 	private String documentNumber;
     
-    @OneToMany(mappedBy = "account",  fetch = FetchType.LAZY)
-    private Set<Transaction> transactions;
-	
 }
