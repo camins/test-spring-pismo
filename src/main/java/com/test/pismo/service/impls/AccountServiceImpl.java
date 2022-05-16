@@ -3,11 +3,11 @@ package com.test.pismo.service.impls;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.test.pismo.domain.Account;
-import com.test.pismo.dtos.AccountReturnDTO;
+import com.test.pismo.dtos.AccountDTO;
+import com.test.pismo.exceptions.BusinessException;
 import com.test.pismo.exceptions.EntityNotFoundException;
 import com.test.pismo.repository.AccountRepository;
 import com.test.pismo.service.interfaces.AccountService;
@@ -19,14 +19,19 @@ public class AccountServiceImpl implements AccountService{
 	private AccountRepository accountRepository;
 	
 	@Override
-	public Account create(Account account) {
+	public Account create(AccountDTO accountDTO) {
 		
-		if(accountRepository.findAccountByDocumentNumber(
-				account.getDocumentNumber()).isPresent()) {
-			throw new DataIntegrityViolationException("Document Number already exists");
+		if(accountDTO.getDocumentNumber() == null
+				|| accountDTO.getDocumentNumber().trim().isBlank()) {
+			throw new BusinessException("Document Number is required");
 		}
 		
-		return accountRepository.save(account);
+		if(accountRepository.findAccountByDocumentNumber(
+				accountDTO.getDocumentNumber()).isPresent()) {
+			throw new BusinessException("Document Number already exists");
+		}
+		
+		return accountRepository.save(converterDTOToAccount(accountDTO));
 	}
 
 	@Override
@@ -42,10 +47,16 @@ public class AccountServiceImpl implements AccountService{
 	}
 	
 	@Override
-	public AccountReturnDTO converter(Account account) {
-		return AccountReturnDTO.builder()
+	public AccountDTO converter(Account account) {
+		return AccountDTO.builder()
 				.id(account.getId())
 				.documentNumber(account.getDocumentNumber())
+				.build();
+	}
+	
+	private Account converterDTOToAccount(AccountDTO accountDTO) {
+		return Account.builder()
+				.documentNumber(accountDTO.getDocumentNumber())
 				.build();
 	}
 

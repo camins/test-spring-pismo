@@ -1,7 +1,5 @@
 package com.test.pismo.dtos;
 
-import java.time.LocalDateTime;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,15 +11,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TransactionReturnDTO {
+public class TransactionDTO {
 
-	private Long id;
-	
-	private Long account;
+	private Long accountId;
 
 	private Integer operationType;
 	
 	private Double amount;
 	
-	private LocalDateTime eventDate;
 }

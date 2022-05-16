@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.test.pismo.domain.Account;
-import com.test.pismo.dtos.AccountReturnDTO;
+import com.test.pismo.dtos.AccountDTO;
 import com.test.pismo.service.interfaces.AccountService;
 
 @RestController
@@ -24,17 +23,17 @@ public class AccountController {
 	private AccountService accountService;
 	
 	@PostMapping
-	public ResponseEntity<AccountReturnDTO> create(@Valid @RequestBody Account account) {
+	public ResponseEntity<AccountDTO> create(@Valid @RequestBody AccountDTO accountDTO) {
 		
-		AccountReturnDTO aDTO = accountService.converter(accountService.create(account)); 
+		AccountDTO aDTO = accountService.converter(accountService.create(accountDTO)); 
 		return ResponseEntity.status(HttpStatus.CREATED).body(aDTO);
 	}
 	
 	@GetMapping(value = "/{accountId}")
-	public ResponseEntity<AccountReturnDTO> find(@PathVariable Long accountId) {
+	public ResponseEntity<AccountDTO> find(@PathVariable Long accountId) {
 		
-		AccountReturnDTO aDTO = accountService.converter(
+		AccountDTO aDTO = accountService.converter(
 				accountService.findAccountById(accountId)); 
-		return ResponseEntity.status(HttpStatus.CREATED).body(aDTO);
+		return ResponseEntity.status(HttpStatus.OK).body(aDTO);
 	}
 }

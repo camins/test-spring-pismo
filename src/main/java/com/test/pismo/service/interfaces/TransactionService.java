@@ -1,12 +1,10 @@
 package com.test.pismo.service.interfaces;
 
 import com.test.pismo.domain.Transaction;
-import com.test.pismo.dtos.TransactionReceiveDTO;
-import com.test.pismo.dtos.TransactionReturnDTO;
+import com.test.pismo.dtos.TransactionDTO;
 
 public interface TransactionService {
 
-	public Transaction create(TransactionReceiveDTO transactionReceive);
+	public Transaction create(TransactionDTO transactionReceive);
 
-	public TransactionReturnDTO converterToDTO(Transaction transaction);
 }

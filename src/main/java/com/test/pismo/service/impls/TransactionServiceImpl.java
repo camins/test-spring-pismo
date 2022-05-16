@@ -7,10 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.test.pismo.domain.Account;
 import com.test.pismo.domain.Transaction;
-import com.test.pismo.dtos.TransactionReceiveDTO;
-import com.test.pismo.dtos.TransactionReturnDTO;
+import com.test.pismo.dtos.TransactionDTO;
 import com.test.pismo.enums.OperationType;
 import com.test.pismo.exceptions.AmountException;
+import com.test.pismo.exceptions.EntityNotFoundException;
 import com.test.pismo.repository.TransactionRepository;
 import com.test.pismo.service.interfaces.AccountService;
 import com.test.pismo.service.interfaces.TransactionService;
@@ -25,34 +25,22 @@ public class TransactionServiceImpl implements TransactionService{
 	private AccountService accountService;
 	
 	@Override
-	public Transaction create(TransactionReceiveDTO transactionReceive) {
+	public Transaction create(TransactionDTO transactionReceive) {
 		
 		if(transactionReceive.getAccountId() == null) {
-			throw new NullPointerException("Account is required");
+			throw new EntityNotFoundException("Account is required");
+		}
+		
+		if(transactionReceive.getAmount() == null || transactionReceive.getAmount() == 0) {
+			throw new AmountException("The value of amount is required and can't be equals to 0");
 		}
 		
 		Transaction transaction = converterToTransaction(transactionReceive);
 		
-		if(transaction.getAmount() == null || transactionReceive.getAmount() == 0) {
-			throw new AmountException("The value of amount is required and can't be equals to 0");
-		}
-		
 		return transactionRepository.save(transaction);
 	}
-
-	@Override
-	public TransactionReturnDTO converterToDTO(Transaction transaction) {
-		
-		return TransactionReturnDTO.builder()
-				.id(transaction.getId())
-				.account(transaction.getAccount().getId())
-				.operationType(transaction.getOperationType().getId())
-				.amount(transaction.getAmount())
-				.eventDate(transaction.getEventDate())
-				.build();
-	}
 	
-	private Transaction converterToTransaction(TransactionReceiveDTO transactionReceive) {
+	private Transaction converterToTransaction(TransactionDTO transactionReceive) {
 		
 		Account account = accountService.findAccountById(transactionReceive.getAccountId());
 		

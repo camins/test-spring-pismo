@@ -3,8 +3,11 @@ package com.test.pismo.enums;
 import java.util.Arrays;
 import java.util.List;
 
+import com.test.pismo.exceptions.BusinessException;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.implementation.bytecode.Throw;
 
 @RequiredArgsConstructor
 @Getter
@@ -67,7 +70,7 @@ public enum OperationType {
     			.stream()
     			.filter(operationType -> operationType.getId() == id)
     			.findFirst()
-    			.get();
+    			.orElseThrow(() -> new BusinessException("Operation Type invalid"));
     }
     
     public abstract Double getValue(Double value);

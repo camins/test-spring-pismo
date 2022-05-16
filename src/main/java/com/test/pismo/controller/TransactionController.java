@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.test.pismo.dtos.TransactionReceiveDTO;
-import com.test.pismo.dtos.TransactionReturnDTO;
+import com.test.pismo.domain.Transaction;
+import com.test.pismo.dtos.TransactionDTO;
 import com.test.pismo.service.interfaces.TransactionService;
 
 @RestController
@@ -22,11 +22,10 @@ public class TransactionController {
 	private TransactionService transactionService;
 	
 	@PostMapping
-	public ResponseEntity<TransactionReturnDTO> create(@Valid @RequestBody TransactionReceiveDTO transactionReceive) {
+	public ResponseEntity<Transaction> create(@Valid @RequestBody TransactionDTO transactionDTO) {
 	
-		TransactionReturnDTO transactionReturn = transactionService.converterToDTO(
-				transactionService.create(transactionReceive));
-		return ResponseEntity.status(HttpStatus.CREATED).body(transactionReturn);
+		Transaction transaction = transactionService.create(transactionDTO);
+		return ResponseEntity.status(HttpStatus.CREATED).body(transaction);
 	}
 
 }

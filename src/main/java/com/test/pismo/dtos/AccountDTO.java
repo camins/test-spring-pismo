@@ -11,12 +11,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TransactionReceiveDTO {
+public class AccountDTO {
 
-	private Long accountId;
-
-	private Integer operationType;
+	private Long id;
 	
-	private Double amount;
-	
+	private String documentNumber;
 }
