@@ -1,6 +1,6 @@
 # API Pismo Back Teste 3.0
 
-API developed for Pismo challenge testing
+API desenvolvida para o desafio teste da Pismo
 
 ## Ferramentas
 
