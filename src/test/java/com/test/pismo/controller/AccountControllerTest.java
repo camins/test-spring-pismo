@@ -52,6 +52,7 @@ public class AccountControllerTest extends SpringTestGeneral {
 		ArgumentCaptor<AccountDTO> argument = ArgumentCaptor.forClass(AccountDTO.class);
 		verify(accountService, times(1)).create(argument.capture());
 		assertEquals(aDTO.getDocumentNumber(), argument.getValue().getDocumentNumber());
+		assertEquals(aDTO.getAvailableCreditLimit(), argument.getValue().getAvailableCreditLimit());
 			
 	}
 	
@@ -99,6 +100,7 @@ public class AccountControllerTest extends SpringTestGeneral {
 	private AccountDTO createAccountReceiveDTO() {
 		return AccountDTO.builder()
 				.documentNumber("12345678900")
+				.availableCreditLimit(100.00)
 				.build();
 	}
 	
@@ -106,6 +108,7 @@ public class AccountControllerTest extends SpringTestGeneral {
 		return Account.builder()
 				.id(1L)
 				.documentNumber("12345678900")
+				.availableCreditLimit(100.00)
 				.build();
 	}
 	

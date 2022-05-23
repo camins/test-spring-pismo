@@ -16,4 +16,6 @@ public class AccountDTO {
 	private Long id;
 	
 	private String documentNumber;
+	
+	private Double availableCreditLimit;
 }

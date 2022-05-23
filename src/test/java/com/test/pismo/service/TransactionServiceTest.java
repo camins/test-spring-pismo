@@ -39,7 +39,7 @@ public class TransactionServiceTest extends SpringTestGeneral {
     private TransactionService transactionalService;
 	
 	@Test
-	public void whenCreateTransactional_thenReturnTransaction() {
+	public void whenCreateTransactionalCredito_thenReturnTransaction() {
 		
 		TransactionDTO transactionDTO = createTransactionDTO();
 		
@@ -51,6 +51,23 @@ public class TransactionServiceTest extends SpringTestGeneral {
 		transactionalService.create(transactionDTO);
 		
 		verify(transactionalRepository, Mockito.times(1)).save(ArgumentMatchers.any(Transaction.class));
+	}
+	
+	@Test
+	public void whenCreateTransactionalDebito_thenError() {
+		
+		TransactionDTO transactionDTO = TransactionDTO.builder()
+				.accountId(1L)
+				.operationType(1)
+				.amount(Double.parseDouble("-50.00"))
+				.build();
+		
+		when(accountService.findAccountById(any()))
+			.thenReturn(Mockito.mock(Account.class));
+		
+		Assertions.assertThrows(BusinessException.class, 
+				() -> transactionalService.create(transactionDTO), 
+				"The account don't have available credit limit");
 	}
 	
 	@Test
@@ -124,8 +141,8 @@ public class TransactionServiceTest extends SpringTestGeneral {
 	private TransactionDTO createTransactionDTO() {
 		return TransactionDTO.builder()
 				.accountId(1L)
-				.operationType(1)
-				.amount(Double.parseDouble("-50.00"))
+				.operationType(4)
+				.amount(Double.parseDouble("50.00"))
 				.build();
 	}
 	

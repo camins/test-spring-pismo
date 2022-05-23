@@ -12,6 +12,7 @@ import com.test.pismo.domain.Transaction;
 import com.test.pismo.dtos.TransactionDTO;
 import com.test.pismo.enums.OperationType;
 import com.test.pismo.exceptions.AmountException;
+import com.test.pismo.exceptions.BusinessException;
 import com.test.pismo.repository.TransactionRepository;
 import com.test.pismo.service.interfaces.AccountService;
 import com.test.pismo.service.interfaces.TransactionService;
@@ -37,6 +38,15 @@ public class TransactionServiceImpl implements TransactionService{
 		}
 		
 		Transaction transaction = converterToTransaction(transactionReceive);
+		
+		if((transaction.getAccount().getAvailableCreditLimit() + transaction.getAmount()) < 0) {
+			throw new BusinessException("The account don't have available credit limit");
+		}
+		
+		transaction.getAccount()
+			.setAvailableCreditLimit(transaction.getAccount().getAvailableCreditLimit() + transaction.getAmount());
+		
+		accountService.update(transaction.getAccount());
 		
 		return transactionRepository.save(transaction);
 	}

@@ -10,5 +10,7 @@ public interface AccountService {
 	public Account findAccountById(Long accountId);
 
 	public AccountDTO converter(Account account);
+
+	public void update(Account account);
 	
 }

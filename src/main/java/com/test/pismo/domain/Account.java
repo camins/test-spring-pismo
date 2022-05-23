@@ -27,5 +27,9 @@ public class Account {
 	@NotNull(message = "Document Number is required")
     @Column(name = "document_number", unique = true, length = 11, nullable = false)
 	private String documentNumber;
+	
+	@NotNull(message = "Available Credit Limit is required")
+	@Column(name = "available_credit_limit", nullable = false)
+	private Double availableCreditLimit;
     
 }

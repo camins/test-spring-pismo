@@ -27,6 +27,10 @@ public class AccountServiceImpl implements AccountService{
 			throw new BusinessException("Document Number is required");
 		}
 		
+		if(accountDTO.getAvailableCreditLimit() == null) {
+			throw new BusinessException("Available credit limit is required");
+		}
+		
 		if(accountRepository.findAccountByDocumentNumber(
 				accountDTO.getDocumentNumber()).isPresent()) {
 			throw new BusinessException("Document Number already exists");
@@ -48,16 +52,23 @@ public class AccountServiceImpl implements AccountService{
 	}
 	
 	@Override
+	public void update(Account account) {
+		accountRepository.save(account);
+	}
+	
+	@Override
 	public AccountDTO converter(Account account) {
 		return AccountDTO.builder()
 				.id(account.getId())
 				.documentNumber(account.getDocumentNumber())
+				.availableCreditLimit(account.getAvailableCreditLimit())
 				.build();
 	}
 	
 	private Account converterDTOToAccount(AccountDTO accountDTO) {
 		return Account.builder()
 				.documentNumber(accountDTO.getDocumentNumber())
+				.availableCreditLimit(accountDTO.getAvailableCreditLimit())
 				.build();
 	}
 

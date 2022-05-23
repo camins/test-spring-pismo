@@ -53,6 +53,7 @@ public class AccountServiceTest extends SpringTestGeneral {
 		
 		AccountDTO aDTO = AccountDTO.builder()
 				.documentNumber(null)
+				.availableCreditLimit(100.00)
 				.build();
 		
 		Assertions.assertThrows(BusinessException.class, 
@@ -101,12 +102,14 @@ public class AccountServiceTest extends SpringTestGeneral {
 
 		assertEquals(a.getId(), ret.getId());
 		assertEquals(a.getDocumentNumber(), ret.getDocumentNumber());
+		assertEquals(a.getAvailableCreditLimit(), ret.getAvailableCreditLimit());
 		//assertNotNull(ret.getTransactions());
 	}
 	
 	private AccountDTO createAccountDTO() {
 		return AccountDTO.builder()
 				.documentNumber("12345678900")
+				.availableCreditLimit(100.00)
 				.build();
 	}
 	
@@ -114,7 +117,7 @@ public class AccountServiceTest extends SpringTestGeneral {
 		return Account.builder()
 				.id(1L)
 				.documentNumber("12345678900")
-				//.transactions(new HashSet<>())
+				.availableCreditLimit(100.00)
 				.build();
 	}
 
